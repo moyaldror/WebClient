@@ -139,7 +139,7 @@ function new_checkUsage(){
 	numOfHeaders=0
 	
 	# Call getopt program to use all the flags and break them
-	TEMP=$(getopt -o i:u:L:l:w:H:t:rhCSV --long SV:,SC:,Pq,Ps,Pr:,cert:,key:,pass:,Rp:,cap:,ftp:,Li:,Lp:,UA:,NSID,Jc -n '$0' -- "$@")
+	TEMP=$(getopt -o i:u:L:l:w:H:t:rhCSV --long SV:,SC:,Pq,Ps,Pr:,cert:,key:,pass:,Rp:,cap:,ftp:,Li:,Lp:,UA:,NSID,Jc -n "$0" -- "$@")
 	
 	# Caes getopt failed
 	if [ $? != 0 ] ; then 
