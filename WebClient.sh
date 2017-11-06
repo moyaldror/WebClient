@@ -3,9 +3,9 @@
 # This is a tool used to siplify the use of curl and working with https in general in QA. The tool #
 # wrapps aroung CURL and actually creats a CURL aommand using the given arguments.                 #
 # Some additions:                                                                                  #
-# 	- Abillity to capture the session using a single flag                                          #
-# 	- Send the capture file to an FTP server using a single flag                                   #
-# 	- Extra features will be added constantly                                                      #
+# 	- Abillity to capture the session using a single flag                                      #
+# 	- Send the capture file to an FTP server using a single flag                               #
+# 	- Extra features will be added constantly                                                  #
 #                                                                                                  #
 # This tool was written by:                                                                        #
 #                                                                                                  #
@@ -21,8 +21,8 @@
 #++++++++++++++++++++++++++
 # Init function           +
 #++++++++++++++++++++++++++
-function init_flags(){
-
+function init_flags()
+{
 	destination_flag="false"
 	server_port_flag="false"
 	local_port_flag="false"
@@ -52,14 +52,16 @@ function init_flags(){
 #+++++++++++++++++++++++++++++++++++++++
 # Function to print a line in the help +
 #+++++++++++++++++++++++++++++++++++++++
-function print_help_line(){
+function print_help_line()
+{
 	echo "$1" | awk '{ printf "   %-10s ", $1 ; for (i=2; i<=NF; i++) printf $i" "; printf "\n\n"}'
 }
 
 #+++++++++++++++++++++++++++++++++++++++++
 # Function to print a header in the help +
 #+++++++++++++++++++++++++++++++++++++++++
-function print_help_header(){
+function print_help_header()
+{
 	tput bold
 	echo "$1";echo
 	tput sgr0
@@ -68,8 +70,8 @@ function print_help_header(){
 #+++++++++++++++++++++++++++++
 # Function to print the help +
 #+++++++++++++++++++++++++++++
-function print_help(){
-
+function print_help()
+{
 	echo
 	print_help_header "Usage: $0 -i <Host-Address-To-Use> [any other flags...]"
 	print_help_header "Important Note: This script will work best with OpenSSL 1.0.1a and higher and CURL 7.41 and higher"
@@ -130,8 +132,8 @@ function print_help(){
 #+++++++++++++++++++++++++
 # Check usage is correct +
 #+++++++++++++++++++++++++
-function new_checkUsage(){
-
+function new_checkUsage()
+{
 	# Init all flags
 	init_flags
 	
@@ -261,8 +263,8 @@ function new_checkUsage(){
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # Function that builds the curl command to be used               +
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-function buildCommand(){
-
+function buildCommand()
+{
 	curlCommand="curl "
 	
 	# Use https
@@ -384,8 +386,8 @@ function buildCommand(){
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # Function that prints SSL Session parameters                    +
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-function print_ssl_session_parameters(){
-
+function print_ssl_session_parameters()
+{
 	echo " SSL Session parameters:"
 	echo " ========================="
 	
@@ -399,8 +401,8 @@ function print_ssl_session_parameters(){
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # Function that prints the request headers only                  +
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-function print_request(){
-
+function print_request()
+{
 	echo " Request Headers:"
 	echo " ===================="
 	
@@ -412,8 +414,8 @@ function print_request(){
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # Function that prints the reply according to the user selection +
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-function print_reply(){
-
+function print_reply()
+{
 	echo " Reply:"
 	echo " ===================="
 	
@@ -433,8 +435,8 @@ function print_reply(){
 # Function that uses the HTTP code number and returns the corespondig +
 # string with code number and string value                            +
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-function get_resCode(){
-
+function get_resCode()
+{
 	# Return a string with code and string description according to the numeral value
 	case $resultCode in
 		100 ) resultCode="100 Continue";;
@@ -526,8 +528,8 @@ function get_resCode(){
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # Function that print statisctics and info when a session passed +
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-function on_session_pass(){
-
+function on_session_pass()
+{
 	# store the stats
 	stats="$failCounter/$sessCounter"
 	
@@ -565,8 +567,8 @@ function on_session_pass(){
 # Function that uses the CURL exit status and build an error string +
 # that matches to the exit status of that command                   +
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-function get_error(){
-
+function get_error()
+{
 	# Return an error string according to the exit status of the CURL command
 	case $cmdRes in
 		1)  errStr="Unsupported Protocol";;
@@ -607,8 +609,8 @@ function get_error(){
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # Function that print statisctics and info when a session falied +
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-function on_session_fail(){
-
+function on_session_fail()
+{
 	# Increase the failed session counter
 	failCounter=$(( failCounter+1 ))
 	
@@ -630,8 +632,8 @@ function on_session_fail(){
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # Function that starts a packet capture                          +
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-function start_capture(){
-
+function start_capture()
+{
 	# Get the file name from the passed argument
 	fileName=$(echo "$capture_args" | awk -F":" '{print $1}')
 	
@@ -657,7 +659,8 @@ function start_capture(){
 # Function that kill the capture process and if needed put the   +
 # capture file on a given FTP server                             +
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-function finish_capture(){
+function finish_capture()
+{
 	# Kill the capture process
 	kill  -9 $capture_pid
 	wait $capture_pid > /dev/null 2>&1
@@ -692,7 +695,8 @@ function finish_capture(){
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # Function that do all current session necessary work            +
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-function do_session_loop(){
+function do_session_loop()
+{
 	# In case the user choose how many loops to do, increase i
 	if [ "$loops_flag" == "true" ]; then
 		let index+=1
@@ -737,7 +741,8 @@ function do_session_loop(){
 # Function that wrapps all the traffic, stats and all the actual +
 # work of this script                                            +
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-function runTraffic(){
+function runTraffic()
+{
 	# Init function related variables
 	failCounter=0
 	sessCounter=0
